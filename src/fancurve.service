@@ -1,0 +1,12 @@
+[Unit]
+Description=FanCurve
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/location/of_the/scripts/set_fancurve.sh
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target

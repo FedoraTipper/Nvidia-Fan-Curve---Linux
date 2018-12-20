@@ -1,0 +1,39 @@
+To setup:  
+  sudo vi /lib/systemd/system/fancurve.service
+  sudo systemctl daemon-reload
+  sudo systemctl enable fancurve
+  sudo systemctl start|stop|restart|status fancurve   <--- Control options
+
+====================================
+NOTE:  This startup script has the ability to restart itself on failure
+
+
+
+
+Examples of output showing sleep and when a fan curve change occurs.
+
+
+fireheadman@clauneck:~/scripts$ sudo systemctl status fancurve -l
+● fancurve.service - FanCurve
+   Loaded: loaded (/lib/systemd/system/fancurve.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2018-04-11 22:05:57 MDT; 1min 3s ago
+ Main PID: 12312 (set_fancurve.sh)
+    Tasks: 2
+   Memory: 296.0K
+      CPU: 13.565s
+   CGroup: /system.slice/fancurve.service
+           ├─12312 /bin/bash /home/fireheadman/scripts/set_fancurve.sh
+           └─12437 sleep 1s
+
+Apr 11 22:05:57 clauneck systemd[1]: Started FanCurve.
+fireheadman@clauneck:~/scripts$ sudo systemctl status fancurve -l
+● fancurve.service - FanCurve
+   Loaded: loaded (/lib/systemd/system/fancurve.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2018-04-11 22:05:57 MDT; 1min 4s ago
+ Main PID: 12312 (set_fancurve.sh)
+    Tasks: 3
+   Memory: 1.1M
+      CPU: 13.572s
+   CGroup: /system.slice/fancurve.service
+           ├─12312 /bin/bash /home/fireheadman/scripts/set_fancurve.sh
+           └─12442 nvidia-settings -a [fan-5]/GPUTargetFanSpeed=60
